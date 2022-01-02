@@ -9,6 +9,7 @@ const db = mysql.createConnection(
     database: process.env.DB_NAME
   },
 );
+
 db.connect((err) => {
   if (err) {
     throw error;
@@ -53,3 +54,11 @@ function Options() {
     })
 };
 
+
+function viewDepartments() {
+  db.query('SELECT * FROM employeetracker_db.department;', function (err, results) {
+    console.table(results);
+    Options();
+  });
+
+};
