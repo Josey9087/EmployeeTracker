@@ -1,11 +1,11 @@
-USE db_employeetrackers;
+USE employeetracker_db;
 
 INSERT INTO department (name)
-VALUES ("Front-End"),
-		("Back-End"),
-        ("API-Team"),
-        ("Debug"),
-        ("Boss");
+VALUES("Front-End"),
+("Back-End"),
+("API-Team"),
+("Debug"),
+("Boss");
 
 INSERT INTO role (title, salary, department_id)
 VALUES ("API Lead", 100000, 3),
@@ -20,11 +20,11 @@ VALUES ("API Lead", 100000, 3),
         
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 	VALUES ("Joseph", "Lee", 3, NULL),
-	("Robert", "Lee", 1, NULL),
-	("Frank", "Lee", 7, 3),
-    ("Ethan", "Lee", 4, NULL),
-    ("Ian", "Lee", 6, 1),
-    ("Stephen", "Lee", 8, 2),
-    ("Stephanie", "Lee", 2, NULL),
-    ("Laura", "Lee", 5, 4),
-    ("Warren", "Lee", 9, NULL);
+("Robert", "Lee", 1, NULL),
+("Frank", "Lee", 7, 3),
+("Ethan", "Lee", 4, NULL),
+("Ian", "Lee", 6, 1),
+("Stephen", "Lee", 8, 2),
+("Stephanie", "Lee", 2, NULL),
+("Laura", "Lee", 5, 4),
+("Warren", "Lee", 9, NULL);
