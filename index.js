@@ -180,3 +180,43 @@ function addEmployee() {
       })
   })
 };
+
+
+
+function updateEmployee() {
+  db.query('SELECT * FROM employeetracker_db.employee;', function (err, results) {
+    let employeeNames = [];
+    results.forEach(result => employeeNames.push({ name: result.first_name + ' ' + result.last_name, value: result.id }));
+    return inquirer.prompt([
+      {
+        type: "list",
+        name: "updatedEmployee",
+        message: "Which employee would you like to update?",
+        choices: employeeNames
+      },
+
+    ])
+      .then((answer) => {
+        let employee = answer.updatedEmployee;
+        db.query('SELECT * FROM employeetracker_db.role;', function (err, results) {
+          let roles = [];
+          results.forEach(result => roles.push({ name: result.title, value: result.id }));
+
+          return inquirer.prompt([
+            {
+              type: "list",
+              name: "updatedRole",
+              message: "What is the employee's new role?",
+              choices: roles
+            },
+          ])
+            .then((answer) => {
+              let newrole = answer.updatedRole;
+              db.query('UPDATE employeetracker_db.employee SET role_id = ? WHERE id = ?', [newrole, employee], function (err, results) {
+                Options();
+              })
+            })
+        })
+      })
+  })
+};
