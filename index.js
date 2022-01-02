@@ -130,3 +130,53 @@ function addRole() {
       })
   })
 };
+
+function addEmployee() {
+  db.query('SELECT * FROM employeetracker_db.role;', function (err, results) {
+    let roleArray = [];
+    results.forEach(result => roleArray.push({ name: result.title, value: result.id }));
+    return inquirer.prompt([
+      {
+        type: "input",
+        name: "employeeFirstname",
+        message: "What is the employee's first name?"
+      },
+      {
+        type: "input",
+        name: "employeeLastname",
+        message: "What is the employee's last name?"
+      },
+      {
+        type: "list",
+        name: "employeeRole",
+        message: "What is the employee's role?",
+        choices: roleArray
+      },
+    ])
+      .then((answers) => {
+        let newFirstName = answers.employeeFirstname;
+        let newLastName = answers.employeeLastname;
+        let newEmployeeRole = answers.employeeRole;
+        db.query('SELECT * FROM employeetracker_db.employee;', function (err, results) {
+          let employeeNameArray = [];
+          results.forEach(result => employeeNameArray.push({ name: result.first_name + ' ' + result.last_name, value: result.id }));
+
+          return inquirer.prompt([
+            {
+              type: "list",
+              name: "employeemanager",
+              message: "Who is the employee's manager?",
+              choices: employeeNameArray
+            },
+          ])
+            .then((answers) => {
+              let managerOptions = answers.employeemanager;
+              db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [newFirstName, newLastName, newEmployeeRole, managerOptions], function (err, results) {
+                console.log(err);
+              })
+              Options();
+            })
+        })
+      })
+  })
+};
