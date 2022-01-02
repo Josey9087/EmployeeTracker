@@ -81,3 +81,19 @@ function viewRoles() {
     Options();
   })
 };
+
+function addDepartment() {
+  return inquirer.prompt([
+    {
+      type: "input",
+      name: "departmentname",
+      message: "What is the name of the new department?"
+    },
+
+  ])
+    .then(function (answer) {
+      db.query("INSERT INTO department (name) VALUES (?)", [answer.departmentname], function (err, results) {
+      })
+      Options();
+    })
+};
