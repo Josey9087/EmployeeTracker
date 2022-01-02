@@ -97,3 +97,36 @@ function addDepartment() {
       Options();
     })
 };
+
+
+function addRole() {
+  db.query('SELECT * FROM employeetracker_db.department;', function (err, results) {
+    let departmentArray = [];
+    results.forEach(result => departmentArray.push({ name: result.name, value: result.id }));
+    return inquirer.prompt([
+      {
+        type: "input",
+        name: "rolename",
+        message: "What is the name of the new role?"
+      },
+      {
+        type: "input",
+        name: "rolesalary",
+        message: "What is the salary of the new role?"
+      },
+      {
+        type: "list",
+        name: "roledepartment",
+        message: "What department is the new role in?",
+        choices: departmentArray
+      },
+
+    ])
+      .then((answers) => {
+        db.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [answers.rolename, answers.rolesalary, answers.roledepartment], function (err, results) {
+          console.log(err);
+        })
+        Options();
+      })
+  })
+};
